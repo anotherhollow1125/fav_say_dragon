@@ -1,0 +1,12 @@
+[package]
+name = "fav_say_dragon"
+version = "0.1.0"
+edition = "2021"
+description = "好きな総菜発表ドラゴンsay"
+
+[dependencies]
+clap = { version = "4.5.4", features = ["derive"] }
+console = "0.15.8"
+anyhow = "1.0.83"
+toml = "0.8.12"
+serde = { version = "1.0.200", features = ["derive"] }
