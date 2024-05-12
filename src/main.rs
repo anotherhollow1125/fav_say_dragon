@@ -95,7 +95,6 @@ fn main() -> Result<()> {
     };
 
     let empty_dragon = create_dragon("", terminal_width);
-    let dragon_line_num = empty_dragon.len();
     let mut printed_flag = false;
 
     let mut pre_captions_iter = pre_captions.into_iter().peekable();
@@ -109,7 +108,7 @@ fn main() -> Result<()> {
 
         if let Some(interval) = interval {
             if pre_captions_iter.peek().is_some() {
-                clear_dragon(interval, dragon_line_num, &term, &mut printed_flag)?;
+                clear_dragon(interval, &term, &mut printed_flag)?;
             }
         }
     }
@@ -118,7 +117,7 @@ fn main() -> Result<()> {
 
     if let Some(interval) = interval {
         if printed_flag && side_dish_iter.peek().is_some() {
-            clear_dragon(interval, dragon_line_num, &term, &mut printed_flag)?;
+            clear_dragon(interval, &term, &mut printed_flag)?;
         }
     }
 
@@ -133,7 +132,7 @@ fn main() -> Result<()> {
 
         if let Some(interval) = interval {
             if side_dish_iter.peek().is_some() {
-                clear_dragon(interval, dragon_line_num, &term, &mut printed_flag)?;
+                clear_dragon(interval, &term, &mut printed_flag)?;
             }
         }
     }
@@ -142,7 +141,7 @@ fn main() -> Result<()> {
 
     if let Some(interval) = interval {
         if printed_flag && after_captions_iter.peek().is_some() {
-            clear_dragon(interval, dragon_line_num, &term, &mut printed_flag)?;
+            clear_dragon(interval, &term, &mut printed_flag)?;
         }
     }
 
@@ -155,7 +154,7 @@ fn main() -> Result<()> {
 
         if let Some(interval) = interval {
             if after_captions_iter.peek().is_some() {
-                clear_dragon(interval, dragon_line_num, &term, &mut printed_flag)?;
+                clear_dragon(interval, &term, &mut printed_flag)?;
             }
         }
     }
@@ -163,14 +162,8 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-fn clear_dragon(
-    interval: u64,
-    _dragon_line_num: usize,
-    term: &Term,
-    printed_flag: &mut bool,
-) -> Result<()> {
+fn clear_dragon(interval: u64, term: &Term, printed_flag: &mut bool) -> Result<()> {
     sleep(Duration::from_millis(interval));
-    // term.move_cursor_up(dragon_line_num + 2)?;
     term.clear_screen()?;
     *printed_flag = false;
 
