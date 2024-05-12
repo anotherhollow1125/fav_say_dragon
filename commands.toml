@@ -1,5 +1,5 @@
 pre_captions = ["好きなコマンド発表ドラゴンが", "好きなコマンドを発表します"]
 
-side_dishes = ["jq", "grep", "sl", "cat"]
+side_dishes = ["jq", "grep", "cat", "python3\n-m http.server"]
 
 after_captions = ["なんの略称かわからないコマンドも", "好き　好き　大好き"]

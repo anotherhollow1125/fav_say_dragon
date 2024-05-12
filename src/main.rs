@@ -171,18 +171,29 @@ fn clear_dragon(interval: u64, term: &Term, printed_flag: &mut bool) -> Result<(
 }
 
 fn create_dragon(side_dish: &str, terminal_width: usize) -> Vec<String> {
-    let side_dish: Vec<char> = side_dish.chars().collect();
-    let empty = Vec::new();
-    let lines: Vec<String> = match side_dish.len() {
-        0..=8 => vec![side_dish.as_slice(), empty.as_slice()],
-        9..=16 => vec![&side_dish[..8], &side_dish[8..]],
-        _ => vec![&side_dish[..8], &side_dish[8..16]],
+    let lines: Vec<String> = match side_dish.lines().count() {
+        0 => vec!["".to_string(), "".to_string()],
+        1 => {
+            let empty = Vec::new();
+            let side_dish: Vec<char> = side_dish.chars().collect();
+            match side_dish.len() {
+                0..=16 => vec![side_dish.as_slice(), empty.as_slice()],
+                17..=32 => vec![&side_dish[..16], &side_dish[16..]],
+                _ => vec![&side_dish[..16], &side_dish[16..32]],
+            }
+            .into_iter()
+            .map(|s| s.iter().collect::<String>())
+            .collect()
+        }
+        _ => {
+            let mut lines: Vec<String> = side_dish.lines().rev().map(|s| s.to_string()).collect();
+            let line0 = lines.pop().unwrap_or("".to_string());
+            let line1 = lines.pop().unwrap_or("".to_string());
+            vec![line0, line1]
+        }
     }
     .into_iter()
-    .map(|s| {
-        let s = s.iter().collect::<String>();
-        console::pad_str(&s, 20, Alignment::Center, None).to_string()
-    })
+    .map(|s| console::pad_str(&s, 20, Alignment::Center, None).to_string())
     .collect();
 
     #[rustfmt::skip]
